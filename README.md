@@ -1,6 +1,10 @@
-# Premium Music Player
+# Music Player
 
-A sleek, beautiful, and high-performance Flutter music player application featuring gapless playback, persistent user preferences, dynamic visual states, and clean architecture.
+---
+
+## Logo
+
+![Music Player Logo](assets/images/logo.png)
 
 ---
 
@@ -8,11 +12,9 @@ A sleek, beautiful, and high-performance Flutter music player application featur
 
 - **Browse Songs**: View a curated catalogue of tracks with beautiful gradients generated dynamically based on song IDs.
 - **Instant Search**: Search through the entire catalog in real-time by song title or artist name.
-- **Full-Featured Audio Player**: Beautiful Now Playing dashboard supporting play/pause, precise seeking/scrubbing, skip previous/next, shuffle, and repeat modes.
-- **Dedicated Favorites View**: A premium glassmorphic screen showing your loved tracks with reactive toggling, automatic empty-states, and immediate playback navigation.
-- **Persistent Favorites**: Save your favorite songs locally via key-value persistence. Heart states remain synchronised across all screens.
-- **Recently Played**: Track and display your recently played songs on the main dashboard for quick access, persisted across app restarts.
-- **Sleek Bottom Mini Player**: A floating bottom player bar that stays visible across screens, letting you control playback on the fly.
+- **Audio Player**: Now Playing dashboard supporting play/pause, precise seeking/scrubbing, skip previous/next, shuffle, and repeat modes.
+- **Favorites**: Save your favorite songs locally.
+- **Recently Played**: Track and display your recently played songs on the main dashboard for quick access.
 
 ---
 
@@ -24,7 +26,7 @@ A sleek, beautiful, and high-performance Flutter music player application featur
 
 ---
 
-## Tech Stack
+## Tech Stack & Packages Used
 
 | Technology | Purpose | Key Benefit |
 | :--- | :--- | :--- |
@@ -216,14 +218,3 @@ flutter test
   - `mini_player_bar_test.dart`: Asserts that the floating bar renders the active song layout when playing, with working playback trigger actions.
 
 ---
-
-## Design Decisions
-
-- **Why clean architecture?**
-  Isolating data sources (APIs/Disk) from core presentation logic enables mock-based unit testing and allows swapping dependencies (e.g., swapping remote APIs for local assets) without modifying UI code.
-- **Why BLoC for state management?**
-  By representing user interactions as a formal stream of incoming events and outgoing states, debugging becomes predictable. You can inspect every transition and guarantee state consistency.
-- **Why GetIt Service Locator instead of Provider/InheritedWidget for DI?**
-  GetIt provides direct access to singletons outside the widget tree, which avoids context-related issues when fetching services (like `AudioService` or Repository classes) inside BLoCs or background channels.
-- **Why plain Dart Models for Entities?**
-  Keeping entities as raw Dart objects (free of annotations, serialization dependencies, or ORM packages) ensures the core business rules are strictly independent of third-party package lifetimes or API contract updates.
