@@ -4,32 +4,20 @@ import '../../../core/constants/app_dimensions.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../../core/utils/song_color_generator.dart';
 
-/// A card displaying a recently played song with option to continue playing.
-///
-/// Features a prominent artwork thumbnail, song details, and a play action.
 class RecentlyPlayingCard extends StatelessWidget {
-  /// The song ID.
   final int songId;
-
-  /// The song title.
   final String title;
 
-  /// The song subtitle/artist.
   final String subtitle;
 
-  /// Whether this song is currently active.
   final bool isActive;
 
-  /// Whether this song is actively playing.
   final bool isPlaying;
 
-  /// Callback when the card itself is tapped (navigates to player).
   final VoidCallback onCardTap;
 
-  /// Callback when only the play/pause button is tapped.
   final VoidCallback onPlayPauseTap;
 
-  /// Creates the [RecentlyPlayingCard] widget.
   const RecentlyPlayingCard({
     super.key,
     required this.songId,
@@ -70,7 +58,9 @@ class RecentlyPlayingCard extends StatelessWidget {
                         end: Alignment.bottomRight,
                         colors: colors,
                       ),
-                      borderRadius: BorderRadius.circular(AppDimensions.radiusSm),
+                      borderRadius: BorderRadius.circular(
+                        AppDimensions.radiusSm,
+                      ),
                     ),
                     child: Center(
                       child: Icon(
@@ -102,7 +92,9 @@ class RecentlyPlayingCard extends StatelessWidget {
                         ),
                         const SizedBox(height: AppDimensions.paddingXs),
                         Text(
-                          isActive && isPlaying ? 'Currently playing' : 'Continue playing',
+                          isActive && isPlaying
+                              ? 'Currently playing'
+                              : 'Continue playing',
                           style: AppTextStyles.timerText.copyWith(
                             color: AppColors.accent,
                             fontWeight: FontWeight.bold,
@@ -123,7 +115,9 @@ class RecentlyPlayingCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(AppDimensions.paddingSm),
               child: Icon(
-                isActive && isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                isActive && isPlaying
+                    ? Icons.pause_rounded
+                    : Icons.play_arrow_rounded,
                 color: AppColors.primaryText,
                 size: AppDimensions.iconLg,
               ),

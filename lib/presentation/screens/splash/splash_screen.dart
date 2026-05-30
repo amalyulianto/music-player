@@ -4,19 +4,15 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 import '../../../core/constants/app_text_styles.dart';
 
-/// A premium, visually stunning Splash Screen.
-///
-/// Features a deep dark gradient background, glowing glassmorphism music emblem,
-/// Outfit typography, and a smooth circular progress indicator.
 class SplashScreen extends StatefulWidget {
-  /// Creates the [SplashScreen] widget.
   const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
@@ -36,10 +32,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     );
 
     _scaleAnimation = Tween<double>(begin: 0.85, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.elasticOut,
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.elasticOut),
     );
 
     _animationController.forward();

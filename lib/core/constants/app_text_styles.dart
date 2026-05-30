@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
-/// Defines the typography and text styles for the Music Player application.
-///
-/// Uses Google Fonts Inter to implement a premium and cohesive design.
 abstract class AppTextStyles {
-  /// Large bold title style used for the now playing song title.
   static final TextStyle songTitle = GoogleFonts.inter(
     fontSize: 22.0,
     fontWeight: FontWeight.bold,

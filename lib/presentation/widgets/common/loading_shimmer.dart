@@ -3,17 +3,13 @@ import 'package:shimmer/shimmer.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 
-/// A loading placeholder widget featuring 8 shimmer rows to mock [SongListItem].
 class LoadingShimmer extends StatelessWidget {
-  /// Creates the [LoadingShimmer] widget.
   const LoadingShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppDimensions.paddingMd,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingMd),
       itemCount: 8,
       itemBuilder: (context, index) {
         return Padding(

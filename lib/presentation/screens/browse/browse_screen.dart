@@ -18,9 +18,7 @@ import '../../widgets/common/network_error_widget.dart';
 import '../../widgets/common/song_list_item.dart';
 import '../../widgets/player/mini_player_bar.dart';
 
-/// A screen that displays a list of songs to browse, integrated with SongBloc.
 class BrowseScreen extends StatefulWidget {
-  /// Creates the [BrowseScreen] widget.
   const BrowseScreen({super.key});
 
   @override
@@ -44,7 +42,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
       child: Builder(
         builder: (context) {
           return Scaffold(
-              appBar: AppBar(
+            appBar: AppBar(
               leading: IconButton(
                 icon: const Icon(
                   Icons.arrow_back_ios,
@@ -68,7 +66,9 @@ class _BrowseScreenState extends State<BrowseScreen> {
                         border: InputBorder.none,
                       ),
                       onChanged: (query) {
-                        context.read<SongBloc>().add(SongSearchQueryChanged(query));
+                        context.read<SongBloc>().add(
+                          SongSearchQueryChanged(query),
+                        );
                       },
                     )
                   : Text(
@@ -156,19 +156,26 @@ class _BrowseScreenState extends State<BrowseScreen> {
                               final song = songs[index];
                               return BlocBuilder<FavoritesBloc, FavoritesState>(
                                 builder: (context, favoritesState) {
-                                  final isFavorite = favoritesState is FavoritesReady &&
-                                      favoritesState.favoriteSongIds.contains(song.id);
+                                  final isFavorite =
+                                      favoritesState is FavoritesReady &&
+                                      favoritesState.favoriteSongIds.contains(
+                                        song.id,
+                                      );
                                   return SongListItem(
                                     title: song.title,
                                     subtitle: song.subtitle,
                                     isFavorite: isFavorite,
                                     number: song.id,
                                     onPlayTap: () {
-                                      context.read<PlayerBloc>().add(PlayerSongRequested(song.id));
+                                      context.read<PlayerBloc>().add(
+                                        PlayerSongRequested(song.id),
+                                      );
                                       context.pushNamed('nowPlaying');
                                     },
                                     onFavoriteTap: () {
-                                      context.read<FavoritesBloc>().add(FavoriteToggled(song.id));
+                                      context.read<FavoritesBloc>().add(
+                                        FavoriteToggled(song.id),
+                                      );
                                     },
                                   );
                                 },
@@ -190,4 +197,3 @@ class _BrowseScreenState extends State<BrowseScreen> {
     );
   }
 }
-

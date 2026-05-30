@@ -3,15 +3,8 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 import '../../../core/constants/app_text_styles.dart';
 
-/// A premium, user-friendly widget shown when network/API requests fail.
-///
-/// Prompts the user to check their internet connection with a glowing offline icon
-/// and provides an elegant "Retry Connection" button.
 class NetworkErrorWidget extends StatelessWidget {
-  /// The failure message to evaluate.
   final String message;
-
-  /// Callback when the "Retry Connection" button is tapped.
   final VoidCallback onRetry;
 
   /// Creates the [NetworkErrorWidget] widget.
@@ -23,7 +16,8 @@ class NetworkErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isNoInternet = message.toLowerCase().contains('network') ||
+    final isNoInternet =
+        message.toLowerCase().contains('network') ||
         message.toLowerCase().contains('internet') ||
         message.toLowerCase().contains('connection') ||
         message.toLowerCase().contains('socket');
@@ -50,7 +44,9 @@ class NetworkErrorWidget extends StatelessWidget {
                 ],
               ),
               child: Icon(
-                isNoInternet ? Icons.wifi_off_rounded : Icons.error_outline_rounded,
+                isNoInternet
+                    ? Icons.wifi_off_rounded
+                    : Icons.error_outline_rounded,
                 size: 64.0,
                 color: AppColors.favoriteRed,
               ),

@@ -11,7 +11,7 @@ class Song extends Equatable {
   /// The English translation/subtitle of the song.
   final String subtitle;
 
-  /// The native Arabic name of the song.
+  /// The native Arabic name of the song. (Currently Not Used)
   final String arabicName;
 
   /// The total number of audio tracks in this song.
@@ -31,5 +31,12 @@ class Song extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, title, subtitle, arabicName, trackCount, category];
+  List<Object?> get props => [
+    id,
+    title,
+    subtitle,
+    arabicName,
+    trackCount,
+    category,
+  ];
 }

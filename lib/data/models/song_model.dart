@@ -1,26 +1,18 @@
 import '../../domain/entities/song.dart';
 
-/// Model representing a song from the network response.
 class SongModel {
-  /// The unique identifier of the song.
   final int id;
 
-  /// The total number of audio tracks in this song.
   final int trackCount;
 
-  /// The English title of the song.
   final String title;
 
-  /// The English translation/subtitle of the song.
   final String subtitle;
 
-  /// The native Arabic name of the song.
   final String arabicName;
 
-  /// The category or origin classification of the song.
   final String category;
 
-  /// Creates a [SongModel] instance.
   const SongModel({
     required this.id,
     required this.trackCount,

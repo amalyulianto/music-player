@@ -10,9 +10,7 @@ import '../../blocs/player/player_state.dart';
 import '../../widgets/common/network_error_widget.dart';
 import '../../widgets/player/active_player_content.dart';
 
-/// The screen showing details of the song currently playing.
 class NowPlayingScreen extends StatelessWidget {
-  /// Creates the [NowPlayingScreen] widget.
   const NowPlayingScreen({super.key});
 
   @override
@@ -50,9 +48,7 @@ class NowPlayingScreen extends StatelessWidget {
               );
             } else if (state is PlayerLoading) {
               return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.accent,
-                ),
+                child: CircularProgressIndicator(color: AppColors.accent),
               );
             } else if (state is PlayerError) {
               return NetworkErrorWidget(

@@ -6,9 +6,6 @@ import '../../presentation/screens/now_playing/now_playing_screen.dart';
 import '../../presentation/screens/favorites/favorites_screen.dart';
 import '../../presentation/screens/splash/splash_screen.dart';
 
-/// The routing configuration for the Music Player application.
-///
-/// Sets up the GoRouter instance with named routes and screen builders.
 class AppRouter {
   /// The global router instance.
   static final GoRouter router = GoRouter(
@@ -17,7 +14,8 @@ class AppRouter {
       GoRoute(
         path: '/splash',
         name: 'splash',
-        builder: (BuildContext context, GoRouterState state) => const SplashScreen(),
+        builder: (BuildContext context, GoRouterState state) =>
+            const SplashScreen(),
       ),
       GoRoute(
         path: '/',
@@ -32,17 +30,20 @@ class AppRouter {
       GoRoute(
         path: '/browse',
         name: 'browse',
-        builder: (BuildContext context, GoRouterState state) => const BrowseScreen(),
+        builder: (BuildContext context, GoRouterState state) =>
+            const BrowseScreen(),
       ),
       GoRoute(
         path: '/favorites',
         name: 'favorites',
-        builder: (BuildContext context, GoRouterState state) => const FavoritesScreen(),
+        builder: (BuildContext context, GoRouterState state) =>
+            const FavoritesScreen(),
       ),
       GoRoute(
         path: '/now-playing',
         name: 'nowPlaying',
-        builder: (BuildContext context, GoRouterState state) => const NowPlayingScreen(),
+        builder: (BuildContext context, GoRouterState state) =>
+            const NowPlayingScreen(),
       ),
     ],
   );

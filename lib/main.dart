@@ -9,30 +9,21 @@ import 'presentation/blocs/player/player_state.dart';
 import 'presentation/blocs/recently_played/recently_played_bloc.dart';
 import 'presentation/blocs/recently_played/recently_played_event.dart';
 
-/// The entry point of the application.
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupServiceLocator();
   runApp(const MyApp());
 }
 
-/// The root widget of the Music Player application.
-///
-/// Sets up the premium dark theme and configures the global router.
 class MyApp extends StatelessWidget {
-  /// Creates the [MyApp] root widget.
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<PlayerBloc>(
-          create: (_) => sl<PlayerBloc>(),
-        ),
-        BlocProvider<FavoritesBloc>(
-          create: (_) => sl<FavoritesBloc>(),
-        ),
+        BlocProvider<PlayerBloc>(create: (_) => sl<PlayerBloc>()),
+        BlocProvider<FavoritesBloc>(create: (_) => sl<FavoritesBloc>()),
         BlocProvider<RecentlyPlayedBloc>(
           create: (_) => sl<RecentlyPlayedBloc>(),
         ),
@@ -42,7 +33,9 @@ class MyApp extends StatelessWidget {
             previous is! PlayerActive && current is PlayerActive,
         listener: (context, state) {
           if (state is PlayerActive) {
-            context.read<RecentlyPlayedBloc>().add(RecentlyPlayedSongAdded(state.song));
+            context.read<RecentlyPlayedBloc>().add(
+              RecentlyPlayedSongAdded(state.song),
+            );
           }
         },
         child: MaterialApp.router(
@@ -55,5 +48,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

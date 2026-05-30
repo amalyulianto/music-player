@@ -18,9 +18,7 @@ import '../../widgets/common/network_error_widget.dart';
 import '../../widgets/common/song_list_item.dart';
 import '../../widgets/player/mini_player_bar.dart';
 
-/// A screen that displays the user's favorite songs (Surahs).
 class FavoritesScreen extends StatelessWidget {
-  /// Creates the [FavoritesScreen] widget.
   const FavoritesScreen({super.key});
 
   @override
@@ -83,10 +81,14 @@ class FavoritesScreen extends StatelessWidget {
                             }
 
                             return ListView.separated(
-                              padding: const EdgeInsets.all(AppDimensions.paddingMd),
+                              padding: const EdgeInsets.all(
+                                AppDimensions.paddingMd,
+                              ),
                               itemCount: favoriteSongs.length,
                               separatorBuilder: (context, index) =>
-                                  const SizedBox(height: AppDimensions.paddingSm),
+                                  const SizedBox(
+                                    height: AppDimensions.paddingSm,
+                                  ),
                               itemBuilder: (context, index) {
                                 final song = favoriteSongs[index];
                                 return SongListItem(
@@ -95,11 +97,15 @@ class FavoritesScreen extends StatelessWidget {
                                   isFavorite: true,
                                   number: index + 1,
                                   onPlayTap: () {
-                                    context.read<PlayerBloc>().add(PlayerSongRequested(song.id));
+                                    context.read<PlayerBloc>().add(
+                                      PlayerSongRequested(song.id),
+                                    );
                                     context.pushNamed('nowPlaying');
                                   },
                                   onFavoriteTap: () {
-                                    context.read<FavoritesBloc>().add(FavoriteToggled(song.id));
+                                    context.read<FavoritesBloc>().add(
+                                      FavoriteToggled(song.id),
+                                    );
                                   },
                                 );
                               },
@@ -124,7 +130,9 @@ class FavoritesScreen extends StatelessWidget {
   Widget _buildEmptyState(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingXl),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppDimensions.paddingXl,
+        ),
         child: Container(
           padding: const EdgeInsets.all(AppDimensions.paddingLg),
           decoration: BoxDecoration(

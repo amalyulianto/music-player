@@ -3,7 +3,6 @@ import '../../../domain/entities/song.dart';
 
 /// Abstract class for all player states.
 abstract class PlayerState extends Equatable {
-  /// Const constructor.
   const PlayerState();
 
   @override
@@ -72,7 +71,14 @@ class PlayerActive extends PlayerState {
   }
 
   @override
-  List<Object?> get props => [song, position, totalDuration, isPlaying, isShuffle, isRepeat];
+  List<Object?> get props => [
+    song,
+    position,
+    totalDuration,
+    isPlaying,
+    isShuffle,
+    isRepeat,
+  ];
 }
 
 /// State indicating that an error occurred in loading/playing a song.
@@ -86,4 +92,3 @@ class PlayerError extends PlayerState {
   @override
   List<Object?> get props => [message];
 }
-

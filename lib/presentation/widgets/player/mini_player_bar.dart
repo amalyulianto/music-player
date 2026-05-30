@@ -9,11 +9,7 @@ import '../../blocs/player/player_bloc.dart';
 import '../../blocs/player/player_event.dart';
 import '../../blocs/player/player_state.dart';
 
-/// A compact bottom player bar for controlling basic playback.
-///
-/// Features song details, a small artwork container, and a play/pause button.
 class MiniPlayerBar extends StatelessWidget {
-  /// Creates the [MiniPlayerBar] widget.
   const MiniPlayerBar({super.key});
 
   @override
@@ -50,7 +46,9 @@ class MiniPlayerBar extends StatelessWidget {
                         end: Alignment.bottomRight,
                         colors: colors,
                       ),
-                      borderRadius: BorderRadius.circular(AppDimensions.radiusSm),
+                      borderRadius: BorderRadius.circular(
+                        AppDimensions.radiusSm,
+                      ),
                     ),
                     child: Center(
                       child: Icon(
@@ -88,9 +86,13 @@ class MiniPlayerBar extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       if (isPlaying) {
-                        context.read<PlayerBloc>().add(const PlayerPauseRequested());
+                        context.read<PlayerBloc>().add(
+                          const PlayerPauseRequested(),
+                        );
                       } else {
-                        context.read<PlayerBloc>().add(const PlayerResumeRequested());
+                        context.read<PlayerBloc>().add(
+                          const PlayerResumeRequested(),
+                        );
                       }
                     },
                     child: Container(

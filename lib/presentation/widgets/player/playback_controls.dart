@@ -2,36 +2,23 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 
-/// A premium controls row widget for playback actions.
-///
-/// Features shuffle, skip previous, play/pause (large white circle),
-/// skip next, and repeat buttons with proper touch targets and visually rich styling.
 class PlaybackControls extends StatelessWidget {
-  /// Whether the player is currently playing audio.
   final bool isPlaying;
 
-  /// Whether the shuffle mode is enabled.
   final bool isShuffle;
 
-  /// Whether the repeat mode is enabled.
   final bool isRepeat;
 
-  /// Callback when play/pause button is tapped.
   final VoidCallback onPlayPause;
 
-  /// Callback when next button is tapped.
   final VoidCallback onNext;
 
-  /// Callback when previous button is tapped.
   final VoidCallback onPrevious;
 
-  /// Callback when shuffle button is tapped.
   final VoidCallback onShuffle;
 
-  /// Callback when repeat button is tapped.
   final VoidCallback onRepeat;
 
-  /// Creates the [PlaybackControls].
   const PlaybackControls({
     super.key,
     required this.isPlaying,

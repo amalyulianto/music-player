@@ -2,19 +2,14 @@ import '../../domain/entities/audio_track.dart';
 
 /// Model representing an audio track from the network response.
 class AudioTrackModel {
-  /// The unique identifier of the audio track.
   final int id;
 
-  /// The track index (position) within the song.
   final int trackIndex;
 
-  /// The URL of the audio file.
   final String audioUrl;
 
-  /// The Arabic text content of the track.
   final String arabicText;
 
-  /// Creates an [AudioTrackModel] instance.
   const AudioTrackModel({
     required this.id,
     required this.trackIndex,

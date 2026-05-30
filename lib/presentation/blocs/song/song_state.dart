@@ -3,7 +3,6 @@ import '../../../domain/entities/song.dart';
 
 /// Abstract class for all song list states.
 abstract class SongState extends Equatable {
-  /// Const constructor.
   const SongState();
 
   @override
@@ -12,7 +11,6 @@ abstract class SongState extends Equatable {
 
 /// Initial state of the song list.
 class SongInitial extends SongState {
-  /// Const constructor.
   const SongInitial();
 
   @override
@@ -39,7 +37,6 @@ class SongLoaded extends SongState {
   /// The active search query.
   final String searchQuery;
 
-  /// Creates a [SongLoaded] state.
   const SongLoaded({
     required this.songs,
     required this.filteredSongs,
@@ -61,4 +58,3 @@ class SongError extends SongState {
   @override
   List<Object?> get props => [message];
 }
-

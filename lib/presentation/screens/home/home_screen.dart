@@ -23,11 +23,7 @@ import '../../widgets/common/song_list_item.dart';
 import '../../widgets/player/mini_player_bar.dart';
 
 /// The main dashboard screen of the Music Player application.
-///
-/// Lays out sections for browsing songs and recently playing songs,
-/// with a floating mini-player bar at the bottom.
 class HomeScreen extends StatelessWidget {
-  /// Creates the [HomeScreen] widget.
   const HomeScreen({super.key});
 
   @override
@@ -74,136 +70,165 @@ class HomeScreen extends StatelessWidget {
           },
           child: Column(
             children: [
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppDimensions.paddingMd,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: AppDimensions.paddingSm),
-                    SectionHeader(
-                      title: 'Browse Songs',
-                      onArrowTap: () {
-                        context.pushNamed('browse');
-                      },
-                    ),
-                    const SizedBox(height: AppDimensions.paddingSm),
-                    BlocBuilder<SongBloc, SongState>(
-                      builder: (context, state) {
-                        if (state is SongLoading) {
-                          return const Center(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: AppDimensions.paddingMd,
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppDimensions.paddingMd,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: AppDimensions.paddingSm),
+                      SectionHeader(
+                        title: 'Browse Songs',
+                        onArrowTap: () {
+                          context.pushNamed('browse');
+                        },
+                      ),
+                      const SizedBox(height: AppDimensions.paddingSm),
+                      BlocBuilder<SongBloc, SongState>(
+                        builder: (context, state) {
+                          if (state is SongLoading) {
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: AppDimensions.paddingMd,
+                                ),
+                                child: CircularProgressIndicator(
+                                  color: AppColors.accent,
+                                ),
                               ),
-                              child: CircularProgressIndicator(
-                                color: AppColors.accent,
-                              ),
-                            ),
-                          );
-                        } else if (state is SongError) {
-                          return NetworkErrorWidget(
-                            message: state.message,
-                            onRetry: () {
-                              context.read<SongBloc>().add(SongListRequested());
-                            },
-                          );
-                        } else if (state is SongLoaded) {
-                          final songs = state.songs.take(4).toList();
-                          return Column(
-                            children: songs.map((song) {
-                              return BlocBuilder<FavoritesBloc, FavoritesState>(
-                                builder: (context, favoritesState) {
-                                  final isFavorite = favoritesState is FavoritesReady &&
-                                      favoritesState.favoriteSongIds.contains(song.id);
-                                  return SongListItem(
-                                    title: song.title,
-                                    subtitle: song.subtitle,
-                                    isFavorite: isFavorite,
-                                    number: song.id,
-                                    onPlayTap: () {
-                                      context.read<PlayerBloc>().add(PlayerSongRequested(song.id));
-                                      context.pushNamed('nowPlaying');
-                                    },
-                                    onFavoriteTap: () {
-                                      context.read<FavoritesBloc>().add(FavoriteToggled(song.id));
-                                    },
-                                  );
-                                },
-                              );
-                            }).toList(),
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      },
-                    ),
-                    BlocBuilder<RecentlyPlayedBloc, RecentlyPlayedState>(
-                      builder: (context, state) {
-                        if (state is RecentlyPlayedReady && state.songs.isNotEmpty) {
-                          final recentSongs = state.songs.take(3).toList();
-                          return BlocBuilder<PlayerBloc, PlayerState>(
-                            builder: (context, playerState) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: AppDimensions.paddingLg),
-                                  const SectionHeader(
-                                    title: 'Recently Playing',
-                                  ),
-                                  const SizedBox(height: AppDimensions.paddingSm),
-                                  ...recentSongs.map((song) {
-                                    final bool isActive = playerState is PlayerActive && playerState.song.id == song.id;
-                                    final bool isPlaying = isActive && playerState.isPlaying;
-
-                                    return Padding(
-                                      padding: const EdgeInsets.only(bottom: AppDimensions.paddingSm),
-                                      child: RecentlyPlayingCard(
-                                        songId: song.id,
-                                        title: song.title,
-                                        subtitle: song.subtitle,
-                                        isActive: isActive,
-                                        isPlaying: isPlaying,
-                                        onCardTap: () {
-                                          if (!isActive) {
-                                            context.read<PlayerBloc>().add(PlayerSongRequested(song.id));
-                                          }
-                                          context.pushNamed('nowPlaying');
-                                        },
-                                        onPlayPauseTap: () {
-                                          if (isActive) {
-                                            if (isPlaying) {
-                                              context.read<PlayerBloc>().add(const PlayerPauseRequested());
-                                            } else {
-                                              context.read<PlayerBloc>().add(const PlayerResumeRequested());
-                                            }
-                                          } else {
-                                            context.read<PlayerBloc>().add(PlayerSongRequested(song.id));
-                                          }
-                                        },
-                                      ),
+                            );
+                          } else if (state is SongError) {
+                            return NetworkErrorWidget(
+                              message: state.message,
+                              onRetry: () {
+                                context.read<SongBloc>().add(
+                                  SongListRequested(),
+                                );
+                              },
+                            );
+                          } else if (state is SongLoaded) {
+                            final songs = state.songs.take(4).toList();
+                            return Column(
+                              children: songs.map((song) {
+                                return BlocBuilder<
+                                  FavoritesBloc,
+                                  FavoritesState
+                                >(
+                                  builder: (context, favoritesState) {
+                                    final isFavorite =
+                                        favoritesState is FavoritesReady &&
+                                        favoritesState.favoriteSongIds.contains(
+                                          song.id,
+                                        );
+                                    return SongListItem(
+                                      title: song.title,
+                                      subtitle: song.subtitle,
+                                      isFavorite: isFavorite,
+                                      number: song.id,
+                                      onPlayTap: () {
+                                        context.read<PlayerBloc>().add(
+                                          PlayerSongRequested(song.id),
+                                        );
+                                        context.pushNamed('nowPlaying');
+                                      },
+                                      onFavoriteTap: () {
+                                        context.read<FavoritesBloc>().add(
+                                          FavoriteToggled(song.id),
+                                        );
+                                      },
                                     );
-                                  }),
-                                ],
-                              );
-                            },
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      },
-                    ),
-                    const SizedBox(height: AppDimensions.paddingLg),
-                  ],
+                                  },
+                                );
+                              }).toList(),
+                            );
+                          }
+                          return const SizedBox.shrink();
+                        },
+                      ),
+                      BlocBuilder<RecentlyPlayedBloc, RecentlyPlayedState>(
+                        builder: (context, state) {
+                          if (state is RecentlyPlayedReady &&
+                              state.songs.isNotEmpty) {
+                            final recentSongs = state.songs.take(3).toList();
+                            return BlocBuilder<PlayerBloc, PlayerState>(
+                              builder: (context, playerState) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      height: AppDimensions.paddingLg,
+                                    ),
+                                    const SectionHeader(
+                                      title: 'Recently Playing',
+                                    ),
+                                    const SizedBox(
+                                      height: AppDimensions.paddingSm,
+                                    ),
+                                    ...recentSongs.map((song) {
+                                      final bool isActive =
+                                          playerState is PlayerActive &&
+                                          playerState.song.id == song.id;
+                                      final bool isPlaying =
+                                          isActive && playerState.isPlaying;
+
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          bottom: AppDimensions.paddingSm,
+                                        ),
+                                        child: RecentlyPlayingCard(
+                                          songId: song.id,
+                                          title: song.title,
+                                          subtitle: song.subtitle,
+                                          isActive: isActive,
+                                          isPlaying: isPlaying,
+                                          onCardTap: () {
+                                            if (!isActive) {
+                                              context.read<PlayerBloc>().add(
+                                                PlayerSongRequested(song.id),
+                                              );
+                                            }
+                                            context.pushNamed('nowPlaying');
+                                          },
+                                          onPlayPauseTap: () {
+                                            if (isActive) {
+                                              if (isPlaying) {
+                                                context.read<PlayerBloc>().add(
+                                                  const PlayerPauseRequested(),
+                                                );
+                                              } else {
+                                                context.read<PlayerBloc>().add(
+                                                  const PlayerResumeRequested(),
+                                                );
+                                              }
+                                            } else {
+                                              context.read<PlayerBloc>().add(
+                                                PlayerSongRequested(song.id),
+                                              );
+                                            }
+                                          },
+                                        ),
+                                      );
+                                    }),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                          return const SizedBox.shrink();
+                        },
+                      ),
+                      const SizedBox(height: AppDimensions.paddingLg),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const MiniPlayerBar(),
-          ],
-        ),
+              const MiniPlayerBar(),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-

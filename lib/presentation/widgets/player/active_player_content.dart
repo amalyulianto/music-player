@@ -14,27 +14,19 @@ import '../../blocs/player/player_event.dart';
 import 'playback_controls.dart';
 import 'progress_bar_widget.dart';
 
-/// Renders the layout and controls when a song is active.
 class ActivePlayerContent extends StatefulWidget {
-  /// The song currently playing.
   final Song song;
 
-  /// The current elapsed playback position.
   final Duration position;
 
-  /// The total duration of the song.
   final Duration totalDuration;
 
-  /// Whether audio is playing.
   final bool isPlaying;
 
-  /// Whether shuffle mode is enabled.
   final bool isShuffle;
 
-  /// Whether repeat mode is enabled.
   final bool isRepeat;
 
-  /// Creates an [ActivePlayerContent] instance.
   const ActivePlayerContent({
     super.key,
     required this.song,
@@ -50,7 +42,6 @@ class ActivePlayerContent extends StatefulWidget {
 }
 
 class _ActivePlayerContentState extends State<ActivePlayerContent> {
-
   @override
   Widget build(BuildContext context) {
     final colors = SongColorGenerator.forId(widget.song.id);
@@ -120,11 +111,16 @@ class _ActivePlayerContentState extends State<ActivePlayerContent> {
                   ),
                   BlocBuilder<FavoritesBloc, FavoritesState>(
                     builder: (context, favoritesState) {
-                      final isFavorite = favoritesState is FavoritesReady &&
-                          favoritesState.favoriteSongIds.contains(widget.song.id);
+                      final isFavorite =
+                          favoritesState is FavoritesReady &&
+                          favoritesState.favoriteSongIds.contains(
+                            widget.song.id,
+                          );
                       return GestureDetector(
                         onTap: () {
-                          context.read<FavoritesBloc>().add(FavoriteToggled(widget.song.id));
+                          context.read<FavoritesBloc>().add(
+                            FavoriteToggled(widget.song.id),
+                          );
                         },
                         child: Container(
                           width: 44.0,
@@ -135,7 +131,9 @@ class _ActivePlayerContentState extends State<ActivePlayerContent> {
                           ),
                           child: Center(
                             child: Icon(
-                              isFavorite ? Icons.favorite : Icons.favorite_border,
+                              isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
                               color: AppColors.favoriteRed,
                               size: AppDimensions.iconMd,
                             ),
@@ -173,14 +171,14 @@ class _ActivePlayerContentState extends State<ActivePlayerContent> {
               totalTime: DurationFormatter.format(widget.totalDuration),
               onSeek: (value) {
                 context.read<PlayerBloc>().add(
-                      PlayerSeekRequested(Duration(milliseconds: value.toInt())),
-                    );
+                  PlayerSeekRequested(Duration(milliseconds: value.toInt())),
+                );
               },
             ),
             const SizedBox(height: AppDimensions.paddingXl),
 
             // Control Buttons
-             PlaybackControls(
+            PlaybackControls(
               isPlaying: widget.isPlaying,
               isShuffle: widget.isShuffle,
               isRepeat: widget.isRepeat,
