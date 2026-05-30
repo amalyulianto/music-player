@@ -4,7 +4,7 @@
 
 ## Logo
 
-![Music Player Logo](assets/music_playerlogo.png)
+![Music Player Logo](assets/music_player_logo.png)
 
 ---
 
