@@ -7,15 +7,18 @@ import 'package:music_player/domain/entities/audio_track.dart';
 import 'package:music_player/domain/entities/song.dart';
 import 'package:music_player/domain/entities/song_detail.dart';
 import 'package:music_player/domain/usecases/get_song_detail_usecase.dart';
+import 'package:music_player/domain/usecases/get_song_list_usecase.dart';
 import 'package:music_player/presentation/blocs/player/player_bloc.dart';
 import 'package:music_player/presentation/blocs/player/player_event.dart';
 import 'package:music_player/presentation/blocs/player/player_state.dart';
 
 class MockGetSongDetailUseCase extends Mock implements GetSongDetailUseCase {}
+class MockGetSongListUseCase extends Mock implements GetSongListUseCase {}
 class MockAudioService extends Mock implements AudioService {}
 
 void main() {
   late MockGetSongDetailUseCase mockGetSongDetailUseCase;
+  late MockGetSongListUseCase mockGetSongListUseCase;
   late MockAudioService mockAudioService;
 
   setUpAll(() {
@@ -29,6 +32,7 @@ void main() {
 
   setUp(() {
     mockGetSongDetailUseCase = MockGetSongDetailUseCase();
+    mockGetSongListUseCase = MockGetSongListUseCase();
     mockAudioService = MockAudioService();
 
     when(() => mockAudioService.positionStream)
@@ -36,6 +40,8 @@ void main() {
     when(() => mockAudioService.durationStream)
         .thenAnswer((_) => const Stream.empty());
     when(() => mockAudioService.isPlayingStream)
+        .thenAnswer((_) => const Stream.empty());
+    when(() => mockAudioService.processingStateStream)
         .thenAnswer((_) => const Stream.empty());
   });
 
@@ -81,6 +87,7 @@ void main() {
 
         return PlayerBloc(
           getSongDetailUseCase: mockGetSongDetailUseCase,
+          getSongListUseCase: mockGetSongListUseCase,
           audioService: mockAudioService,
         );
       },
@@ -108,6 +115,7 @@ void main() {
 
         return PlayerBloc(
           getSongDetailUseCase: mockGetSongDetailUseCase,
+          getSongListUseCase: mockGetSongListUseCase,
           audioService: mockAudioService,
         );
       },
@@ -128,6 +136,7 @@ void main() {
         when(() => mockAudioService.pause()).thenAnswer((_) async {});
         return PlayerBloc(
           getSongDetailUseCase: mockGetSongDetailUseCase,
+          getSongListUseCase: mockGetSongListUseCase,
           audioService: mockAudioService,
         );
       },
@@ -157,6 +166,7 @@ void main() {
         when(() => mockAudioService.resume()).thenAnswer((_) async {});
         return PlayerBloc(
           getSongDetailUseCase: mockGetSongDetailUseCase,
+          getSongListUseCase: mockGetSongListUseCase,
           audioService: mockAudioService,
         );
       },

@@ -28,6 +28,12 @@ class ActivePlayerContent extends StatefulWidget {
   /// Whether audio is playing.
   final bool isPlaying;
 
+  /// Whether shuffle mode is enabled.
+  final bool isShuffle;
+
+  /// Whether repeat mode is enabled.
+  final bool isRepeat;
+
   /// Creates an [ActivePlayerContent] instance.
   const ActivePlayerContent({
     super.key,
@@ -35,6 +41,8 @@ class ActivePlayerContent extends StatefulWidget {
     required this.position,
     required this.totalDuration,
     required this.isPlaying,
+    required this.isShuffle,
+    required this.isRepeat,
   });
 
   @override
@@ -42,8 +50,6 @@ class ActivePlayerContent extends StatefulWidget {
 }
 
 class _ActivePlayerContentState extends State<ActivePlayerContent> {
-  bool _isShuffle = false;
-  bool _isRepeat = false;
 
   @override
   Widget build(BuildContext context) {
@@ -174,10 +180,10 @@ class _ActivePlayerContentState extends State<ActivePlayerContent> {
             const SizedBox(height: AppDimensions.paddingXl),
 
             // Control Buttons
-            PlaybackControls(
+             PlaybackControls(
               isPlaying: widget.isPlaying,
-              isShuffle: _isShuffle,
-              isRepeat: _isRepeat,
+              isShuffle: widget.isShuffle,
+              isRepeat: widget.isRepeat,
               onPlayPause: () {
                 if (widget.isPlaying) {
                   context.read<PlayerBloc>().add(const PlayerPauseRequested());
@@ -192,14 +198,10 @@ class _ActivePlayerContentState extends State<ActivePlayerContent> {
                 context.read<PlayerBloc>().add(const PlayerPreviousRequested());
               },
               onShuffle: () {
-                setState(() {
-                  _isShuffle = !_isShuffle;
-                });
+                context.read<PlayerBloc>().add(const PlayerShuffleToggled());
               },
               onRepeat: () {
-                setState(() {
-                  _isRepeat = !_isRepeat;
-                });
+                context.read<PlayerBloc>().add(const PlayerRepeatToggled());
               },
             ),
             const SizedBox(height: AppDimensions.paddingMd),

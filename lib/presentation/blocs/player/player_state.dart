@@ -36,12 +36,20 @@ class PlayerActive extends PlayerState {
   /// Whether the audio is currently playing.
   final bool isPlaying;
 
+  /// Whether the player is in shuffle mode.
+  final bool isShuffle;
+
+  /// Whether the player is in repeat mode.
+  final bool isRepeat;
+
   /// Creates a [PlayerActive] state.
   const PlayerActive({
     required this.song,
     required this.position,
     required this.totalDuration,
     required this.isPlaying,
+    this.isShuffle = false,
+    this.isRepeat = false,
   });
 
   /// Creates a copy of this state with the given fields replaced.
@@ -50,17 +58,21 @@ class PlayerActive extends PlayerState {
     Duration? position,
     Duration? totalDuration,
     bool? isPlaying,
+    bool? isShuffle,
+    bool? isRepeat,
   }) {
     return PlayerActive(
       song: song ?? this.song,
       position: position ?? this.position,
       totalDuration: totalDuration ?? this.totalDuration,
       isPlaying: isPlaying ?? this.isPlaying,
+      isShuffle: isShuffle ?? this.isShuffle,
+      isRepeat: isRepeat ?? this.isRepeat,
     );
   }
 
   @override
-  List<Object?> get props => [song, position, totalDuration, isPlaying];
+  List<Object?> get props => [song, position, totalDuration, isPlaying, isShuffle, isRepeat];
 }
 
 /// State indicating that an error occurred in loading/playing a song.

@@ -41,7 +41,11 @@ Future<void> setupServiceLocator() async {
 
   // BLoCs (Factories for fresh instances per Provider)
   sl.registerFactory(() => SongBloc(getSongListUseCase: sl()));
-  sl.registerFactory(() => PlayerBloc(getSongDetailUseCase: sl(), audioService: sl()));
+  sl.registerFactory(() => PlayerBloc(
+        getSongDetailUseCase: sl(),
+        getSongListUseCase: sl(),
+        audioService: sl(),
+      ));
   sl.registerFactory(() => FavoritesBloc(prefs: sl()));
   sl.registerFactory(() => RecentlyPlayedBloc(prefs: sl()));
 }

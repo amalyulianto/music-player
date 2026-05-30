@@ -72,3 +72,21 @@ class PlayerIsPlayingChanged extends PlayerEvent {
   /// Creates a [PlayerIsPlayingChanged] event with [isPlaying].
   const PlayerIsPlayingChanged(this.isPlaying);
 }
+
+/// Event to request toggling shuffle mode.
+class PlayerShuffleToggled extends PlayerEvent {
+  /// Creates a [PlayerShuffleToggled] event.
+  const PlayerShuffleToggled();
+}
+
+/// Event to request toggling repeat mode.
+class PlayerRepeatToggled extends PlayerEvent {
+  /// Creates a [PlayerRepeatToggled] event.
+  const PlayerRepeatToggled();
+}
+
+/// Internal event fired when a song finishes playback completely.
+class PlayerPlaybackCompleted extends PlayerEvent {
+  /// Creates a [PlayerPlaybackCompleted] event.
+  const PlayerPlaybackCompleted();
+}

@@ -43,7 +43,6 @@ class MyApp extends StatelessWidget {
         listener: (context, state) {
           if (state is PlayerActive) {
             context.read<RecentlyPlayedBloc>().add(RecentlyPlayedSongAdded(state.song));
-            AppRouter.router.pushNamed('nowPlaying');
           }
         },
         child: MaterialApp.router(

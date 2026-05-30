@@ -28,7 +28,16 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   bloc_test: ^9.1.7
   mocktail: ^1.0.4
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
 
   uses-material-design: true
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/music_player_logo.png"
+  adaptive_icon_background: "#121212"
+  adaptive_icon_foreground: "assets/music_player_logo.png"

@@ -14,6 +14,7 @@ import '../../blocs/song/song_bloc.dart';
 import '../../blocs/song/song_event.dart';
 import '../../blocs/song/song_state.dart';
 import '../../widgets/common/loading_shimmer.dart';
+import '../../widgets/common/network_error_widget.dart';
 import '../../widgets/common/song_list_item.dart';
 import '../../widgets/player/mini_player_bar.dart';
 
@@ -130,28 +131,11 @@ class _BrowseScreenState extends State<BrowseScreen> {
                         if (state is SongLoading) {
                           return const LoadingShimmer();
                         } else if (state is SongError) {
-                          return Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  state.message,
-                                  style: AppTextStyles.listSubtitle.copyWith(
-                                    color: AppColors.favoriteRed,
-                                  ),
-                                ),
-                                const SizedBox(height: AppDimensions.paddingMd),
-                                TextButton(
-                                  onPressed: () {
-                                    context.read<SongBloc>().add(SongListRequested());
-                                  },
-                                  child: Text(
-                                    'Retry',
-                                    style: AppTextStyles.actionButton,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          return NetworkErrorWidget(
+                            message: state.message,
+                            onRetry: () {
+                              context.read<SongBloc>().add(SongListRequested());
+                            },
                           );
                         } else if (state is SongLoaded) {
                           final songs = state.filteredSongs;
@@ -181,6 +165,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
                                     number: song.id,
                                     onPlayTap: () {
                                       context.read<PlayerBloc>().add(PlayerSongRequested(song.id));
+                                      context.pushNamed('nowPlaying');
                                     },
                                     onFavoriteTap: () {
                                       context.read<FavoritesBloc>().add(FavoriteToggled(song.id));

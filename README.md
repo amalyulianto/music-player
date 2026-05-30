@@ -8,10 +8,19 @@ A sleek, beautiful, and high-performance Flutter music player application featur
 
 - **Browse Songs**: View a curated catalogue of tracks with beautiful gradients generated dynamically based on song IDs.
 - **Instant Search**: Search through the entire catalog in real-time by song title or artist name.
-- **Full-Featured Audio Player**: Beautiful Now Playing dashboard supporting play/pause, precise seeking/scrubbing, repeat modes, and shuffle controls.
+- **Full-Featured Audio Player**: Beautiful Now Playing dashboard supporting play/pause, precise seeking/scrubbing, skip previous/next, shuffle, and repeat modes.
+- **Dedicated Favorites View**: A premium glassmorphic screen showing your loved tracks with reactive toggling, automatic empty-states, and immediate playback navigation.
 - **Persistent Favorites**: Save your favorite songs locally via key-value persistence. Heart states remain synchronised across all screens.
 - **Recently Played**: Track and display your recently played songs on the main dashboard for quick access, persisted across app restarts.
 - **Sleek Bottom Mini Player**: A floating bottom player bar that stays visible across screens, letting you control playback on the fly.
+
+---
+
+## Screenshots
+
+| Home Screen | Browse Screen | Now Playing |
+| :---: | :---: | :---: |
+| <img src="assets/screenshots/home screen.png" width="220" alt="Home Screen"/> | <img src="assets/screenshots/browse_screen.png" width="220" alt="Browse Screen"/> | <img src="assets/screenshots/nowplaying_screen.png" width="220" alt="Now Playing Screen"/> |
 
 ---
 
@@ -119,7 +128,10 @@ The application features highly focused, single-responsibility **BLoCs (Business
   - `PlayerSongRequested`: Plays a song by its unique ID.
   - `PlayerPauseRequested` / `PlayerResumeRequested`: Pauses or resumes audio.
   - `PlayerSeekRequested`: Jumps to a specific elapsed timestamp.
+  - `PlayerNextRequested` / `PlayerPreviousRequested`: Advances sequentially (or randomly if shuffle is enabled) or returns to the previous song.
+  - `PlayerShuffleToggled` / `PlayerRepeatToggled`: Toggles player mode flags reactively and natively controls playback loop properties.
   - `PlayerPositionUpdated` / `PlayerDurationUpdated`: Updates elapsed and total time.
+  - `PlayerPlaybackCompleted`: Internal completion hook that automatically triggers the next song.
 - **States**: `PlayerInitial`, `PlayerLoading`, `PlayerActive`, `PlayerError`.
 - **Scope**: Globally scoped at root (`main.dart`) to ensure uninterrupted background/screen-to-screen playback.
 

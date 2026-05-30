@@ -5,7 +5,9 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../blocs/player/player_bloc.dart';
+import '../../blocs/player/player_event.dart';
 import '../../blocs/player/player_state.dart';
+import '../../widgets/common/network_error_widget.dart';
 import '../../widgets/player/active_player_content.dart';
 
 /// The screen showing details of the song currently playing.
@@ -53,31 +55,16 @@ class NowPlayingScreen extends StatelessWidget {
                 ),
               );
             } else if (state is PlayerError) {
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppDimensions.paddingLg),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        state.message,
-                        style: AppTextStyles.songArtist.copyWith(
-                          color: AppColors.favoriteRed,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: AppDimensions.paddingMd),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.arrow_back,
-                          color: AppColors.primaryText,
-                          size: AppDimensions.iconMd,
-                        ),
-                        onPressed: () => context.pop(),
-                      ),
-                    ],
-                  ),
-                ),
+              return NetworkErrorWidget(
+                message: state.message,
+                onRetry: () {
+                  final songId = context.read<PlayerBloc>().lastRequestedSongId;
+                  if (songId != null) {
+                    context.read<PlayerBloc>().add(PlayerSongRequested(songId));
+                  } else {
+                    context.pop();
+                  }
+                },
               );
             } else if (state is PlayerActive) {
               return ActivePlayerContent(
@@ -85,6 +72,8 @@ class NowPlayingScreen extends StatelessWidget {
                 position: state.position,
                 totalDuration: state.totalDuration,
                 isPlaying: state.isPlaying,
+                isShuffle: state.isShuffle,
+                isRepeat: state.isRepeat,
               );
             }
             return const SizedBox.shrink();
