@@ -45,7 +45,7 @@ class SongListItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(
           vertical: AppDimensions.paddingSm,
         ),
-        color: Colors.transparent, // Ensures the whole row area is interactive
+        color: AppColors.transparent, // Ensures the whole row area is interactive
         child: Row(
           children: [
             // Leading number or play icon

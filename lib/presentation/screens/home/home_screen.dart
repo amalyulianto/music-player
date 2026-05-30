@@ -42,12 +42,23 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           centerTitle: true,
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.transparent,
           elevation: 0.0,
           automaticallyImplyLeading: false,
         ),
-        body: Column(
-          children: [
+        body: BlocListener<SongBloc, SongState>(
+          listener: (context, state) {
+            if (state is SongError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                  backgroundColor: AppColors.favoriteRed,
+                ),
+              );
+            }
+          },
+          child: Column(
+            children: [
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(
@@ -156,6 +167,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const MiniPlayerBar(),
           ],
+        ),
         ),
       ),
     );

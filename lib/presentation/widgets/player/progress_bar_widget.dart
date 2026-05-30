@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/app_dimensions.dart';
 import '../../../core/constants/app_text_styles.dart';
 
 /// A reusable progress bar widget for the media player.
@@ -60,9 +61,9 @@ class ProgressBarWidget extends StatelessWidget {
             onChanged: onSeek,
           ),
         ),
-        const SizedBox(height: 8.0),
+        const SizedBox(height: AppDimensions.paddingSm),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+          padding: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingXs),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

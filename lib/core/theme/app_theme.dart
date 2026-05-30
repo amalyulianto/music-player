@@ -17,7 +17,7 @@ abstract class AppTheme {
         surface: AppColors.surface,
       ),
       appBarTheme: AppBarTheme(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.transparent,
         elevation: 0.0,
         centerTitle: true,
         titleTextStyle: AppTextStyles.sectionHeader,

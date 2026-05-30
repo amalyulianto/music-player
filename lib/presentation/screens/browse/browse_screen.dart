@@ -78,7 +78,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
                       ),
                     ),
               centerTitle: true,
-              backgroundColor: Colors.transparent,
+              backgroundColor: AppColors.transparent,
               elevation: 0.0,
               actions: [
                 if (_isSearching)
@@ -145,12 +145,9 @@ class _BrowseScreenState extends State<BrowseScreen> {
                                   onPressed: () {
                                     context.read<SongBloc>().add(SongListRequested());
                                   },
-                                  child: const Text(
+                                  child: Text(
                                     'Retry',
-                                    style: TextStyle(
-                                      color: AppColors.accent,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: AppTextStyles.actionButton,
                                   ),
                                 ),
                               ],

@@ -22,7 +22,7 @@ class LoadingShimmer extends StatelessWidget {
           ),
           child: Shimmer.fromColors(
             baseColor: AppColors.surfaceLight,
-            highlightColor: const Color(0xFF3A3A3A),
+            highlightColor: AppColors.progressTrack,
             child: Row(
               children: [
                 // Leading square/circle placeholder (mocking index/play)
@@ -30,7 +30,7 @@ class LoadingShimmer extends StatelessWidget {
                   width: AppDimensions.iconXl,
                   height: 20.0,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.white,
                     borderRadius: BorderRadius.circular(4.0),
                   ),
                 ),
@@ -44,7 +44,7 @@ class LoadingShimmer extends StatelessWidget {
                         width: double.infinity,
                         height: 16.0,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: AppColors.white,
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                       ),
@@ -53,7 +53,7 @@ class LoadingShimmer extends StatelessWidget {
                         width: 150.0,
                         height: 12.0,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: AppColors.white,
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                       ),
@@ -66,7 +66,7 @@ class LoadingShimmer extends StatelessWidget {
                   width: AppDimensions.iconMd,
                   height: AppDimensions.iconMd,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.white,
                     borderRadius: BorderRadius.circular(AppDimensions.radiusSm),
                   ),
                 ),

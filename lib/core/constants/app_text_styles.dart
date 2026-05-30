@@ -61,4 +61,11 @@ abstract class AppTextStyles {
     fontWeight: FontWeight.normal,
     color: AppColors.secondaryText,
   );
+
+  /// Bold button text style used for actions like retry.
+  static final TextStyle actionButton = GoogleFonts.inter(
+    fontSize: 14.0,
+    fontWeight: FontWeight.bold,
+    color: AppColors.accent,
+  );
 }

@@ -55,7 +55,7 @@ class MiniPlayerBar extends StatelessWidget {
                     child: Center(
                       child: Icon(
                         Icons.music_note,
-                        color: Colors.white.withAlpha(204),
+                        color: AppColors.white.withAlpha(204),
                         size: AppDimensions.iconMd,
                       ),
                     ),

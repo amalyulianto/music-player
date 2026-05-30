@@ -90,7 +90,7 @@ class PlaybackControls extends StatelessWidget {
             height: 64.0,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.white,
+              color: AppColors.white,
             ),
             child: Center(
               child: Icon(

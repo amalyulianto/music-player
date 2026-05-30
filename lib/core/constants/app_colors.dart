@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 ///
 /// Follows the design system guidelines with curated dark-theme values.
 abstract class AppColors {
+  /// A fully transparent color.
+  static const Color transparent = Colors.transparent;
+
+  /// Pure white color for standard widget styling.
+  static const Color white = Colors.white;
+
   /// The global background color of the application.
   static const Color background = Color(0xFF000000);
 

@@ -84,7 +84,7 @@ class _ActivePlayerContentState extends State<ActivePlayerContent> {
                   child: Icon(
                     Icons.music_note,
                     size: 80.0,
-                    color: Colors.white.withAlpha(204),
+                    color: AppColors.white.withAlpha(204),
                   ),
                 ),
               ),

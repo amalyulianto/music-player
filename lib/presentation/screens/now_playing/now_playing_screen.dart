@@ -33,7 +33,7 @@ class NowPlayingScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.transparent,
         elevation: 0.0,
       ),
       body: SafeArea(
