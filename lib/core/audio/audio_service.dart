@@ -5,12 +5,13 @@ import '../../domain/entities/song_detail.dart';
 /// Service class interfacing with [AudioPlayer] from just_audio.
 class AudioService {
   final AudioPlayer _player = AudioPlayer();
-  final StreamController<Duration> _totalPositionController = StreamController<Duration>.broadcast();
-  final StreamController<Duration> _totalDurationController = StreamController<Duration>.broadcast();
+  final StreamController<Duration> _totalPositionController =
+      StreamController<Duration>.broadcast();
+  final StreamController<Duration> _totalDurationController =
+      StreamController<Duration>.broadcast();
   final List<Duration> _trackDurations = [];
   Duration _stableTotalDuration = Duration.zero;
 
-  /// Creates an [AudioService] instance.
   AudioService() {
     _player.positionStream.listen((_) => _emitTotalPositionAndDuration());
     _player.currentIndexStream.listen((_) => _emitTotalPositionAndDuration());
@@ -38,7 +39,9 @@ class AudioService {
       final actualDur = sequence[index].duration;
       if (actualDur != null && actualDur > Duration.zero) {
         final ratio = estimatedDur.inMilliseconds / actualDur.inMilliseconds;
-        scaledPos = Duration(milliseconds: (_player.position.inMilliseconds * ratio).round());
+        scaledPos = Duration(
+          milliseconds: (_player.position.inMilliseconds * ratio).round(),
+        );
         if (scaledPos > estimatedDur) {
           scaledPos = estimatedDur;
         }
@@ -63,7 +66,8 @@ class AudioService {
   Stream<bool> get isPlayingStream => _player.playingStream;
 
   /// Exposes the player's processing state stream.
-  Stream<ProcessingState> get processingStateStream => _player.processingStateStream;
+  Stream<ProcessingState> get processingStateStream =>
+      _player.processingStateStream;
 
   /// Exposes the concatenated playback position stream.
   Stream<Duration> get positionStream => _totalPositionController.stream;
@@ -93,7 +97,9 @@ class AudioService {
       final actualDur = sequence[index].duration;
       if (actualDur != null && actualDur > Duration.zero) {
         final ratio = estimatedDur.inMilliseconds / actualDur.inMilliseconds;
-        scaledPos = Duration(milliseconds: (_player.position.inMilliseconds * ratio).round());
+        scaledPos = Duration(
+          milliseconds: (_player.position.inMilliseconds * ratio).round(),
+        );
         if (scaledPos > estimatedDur) {
           scaledPos = estimatedDur;
         }
@@ -124,14 +130,17 @@ class AudioService {
     for (final track in song.audioTracks) {
       _trackDurations.add(_estimateAyahDuration(track.arabicText));
     }
-    _stableTotalDuration = _trackDurations.fold<Duration>(Duration.zero, (p, c) => p + c);
+    _stableTotalDuration = _trackDurations.fold<Duration>(
+      Duration.zero,
+      (p, c) => p + c,
+    );
 
     final source = ConcatenatingAudioSource(
       children: song.audioTracks
           .map((t) => AudioSource.uri(Uri.parse(t.audioUrl)))
           .toList(),
     );
-    await _player.setAudioSource(source);
+    await _player.setAudioSource(source, preload: false);
     await _player.play();
   }
 
@@ -182,9 +191,13 @@ class AudioService {
     if (targetIndex < _trackDurations.length) {
       final estimatedDur = _trackDurations[targetIndex];
       final actualDur = sequence[targetIndex].duration;
-      if (actualDur != null && actualDur > Duration.zero && estimatedDur > Duration.zero) {
+      if (actualDur != null &&
+          actualDur > Duration.zero &&
+          estimatedDur > Duration.zero) {
         final ratio = actualDur.inMilliseconds / estimatedDur.inMilliseconds;
-        targetSeekOffset = Duration(milliseconds: (relativeOffset.inMilliseconds * ratio).round());
+        targetSeekOffset = Duration(
+          milliseconds: (relativeOffset.inMilliseconds * ratio).round(),
+        );
         if (targetSeekOffset > actualDur) {
           targetSeekOffset = actualDur;
         }

@@ -128,9 +128,16 @@ class HomeScreen extends StatelessWidget {
                                       isFavorite: isFavorite,
                                       number: song.id,
                                       onPlayTap: () {
-                                        context.read<PlayerBloc>().add(
-                                          PlayerSongRequested(song.id),
-                                        );
+                                        final playerState =
+                                            context.read<PlayerBloc>().state;
+                                        final isCurrentlyPlaying =
+                                            playerState is PlayerActive &&
+                                            playerState.song.id == song.id;
+                                        if (!isCurrentlyPlaying) {
+                                          context.read<PlayerBloc>().add(
+                                            PlayerSongRequested(song.id),
+                                          );
+                                        }
                                         context.pushNamed('nowPlaying');
                                       },
                                       onFavoriteTap: () {
@@ -149,74 +156,87 @@ class HomeScreen extends StatelessWidget {
                       ),
                       BlocBuilder<RecentlyPlayedBloc, RecentlyPlayedState>(
                         builder: (context, state) {
-                          if (state is RecentlyPlayedReady &&
-                              state.songs.isNotEmpty) {
-                            final recentSongs = state.songs.take(3).toList();
-                            return BlocBuilder<PlayerBloc, PlayerState>(
-                              builder: (context, playerState) {
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(
-                                      height: AppDimensions.paddingLg,
-                                    ),
-                                    const SectionHeader(
-                                      title: 'Recently Playing',
-                                    ),
-                                    const SizedBox(
-                                      height: AppDimensions.paddingSm,
-                                    ),
-                                    ...recentSongs.map((song) {
-                                      final bool isActive =
-                                          playerState is PlayerActive &&
-                                          playerState.song.id == song.id;
-                                      final bool isPlaying =
-                                          isActive && playerState.isPlaying;
+                          final songs = state is RecentlyPlayedReady ? state.songs : [];
 
-                                      return Padding(
-                                        padding: const EdgeInsets.only(
-                                          bottom: AppDimensions.paddingSm,
-                                        ),
-                                        child: RecentlyPlayingCard(
-                                          songId: song.id,
-                                          title: song.title,
-                                          subtitle: song.subtitle,
-                                          isActive: isActive,
-                                          isPlaying: isPlaying,
-                                          onCardTap: () {
-                                            if (!isActive) {
-                                              context.read<PlayerBloc>().add(
-                                                PlayerSongRequested(song.id),
-                                              );
-                                            }
-                                            context.pushNamed('nowPlaying');
-                                          },
-                                          onPlayPauseTap: () {
-                                            if (isActive) {
-                                              if (isPlaying) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: AppDimensions.paddingLg),
+                              const SectionHeader(
+                                title: 'Recently Playing',
+                              ),
+                              const SizedBox(height: AppDimensions.paddingSm),
+                              if (songs.isNotEmpty) ...[
+                                BlocBuilder<PlayerBloc, PlayerState>(
+                                  builder: (context, playerState) {
+                                    final recentSongs = songs.take(3).toList();
+                                    return Column(
+                                      children: recentSongs.map((song) {
+                                        final bool isActive =
+                                            playerState is PlayerActive &&
+                                            playerState.song.id == song.id;
+                                        final bool isPlaying =
+                                            isActive && playerState.isPlaying;
+
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: AppDimensions.paddingSm,
+                                          ),
+                                          child: RecentlyPlayingCard(
+                                            songId: song.id,
+                                            title: song.title,
+                                            subtitle: song.subtitle,
+                                            isActive: isActive,
+                                            isPlaying: isPlaying,
+                                            onCardTap: () {
+                                              if (!isActive) {
                                                 context.read<PlayerBloc>().add(
-                                                  const PlayerPauseRequested(),
-                                                );
-                                              } else {
-                                                context.read<PlayerBloc>().add(
-                                                  const PlayerResumeRequested(),
+                                                  PlayerSongRequested(song.id),
                                                 );
                                               }
-                                            } else {
-                                              context.read<PlayerBloc>().add(
-                                                PlayerSongRequested(song.id),
-                                              );
-                                            }
-                                          },
-                                        ),
-                                      );
-                                    }),
-                                  ],
-                                );
-                              },
-                            );
-                          }
-                          return const SizedBox.shrink();
+                                              context.pushNamed('nowPlaying');
+                                            },
+                                            onPlayPauseTap: () {
+                                              if (isActive) {
+                                                if (isPlaying) {
+                                                  context.read<PlayerBloc>().add(
+                                                    const PlayerPauseRequested(),
+                                                  );
+                                                } else {
+                                                  context.read<PlayerBloc>().add(
+                                                    const PlayerResumeRequested(),
+                                                  );
+                                                }
+                                              } else {
+                                                context.read<PlayerBloc>().add(
+                                                  PlayerSongRequested(song.id),
+                                                );
+                                              }
+                                            },
+                                          ),
+                                        );
+                                      }).toList(),
+                                    );
+                                  },
+                                )
+                              ] else ...[
+                                Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: AppDimensions.paddingMd,
+                                    ),
+                                    child: Text(
+                                      'Play some song!',
+                                      style: AppTextStyles.listSubtitle.copyWith(
+                                        color: AppColors.secondaryText,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ],
+                          );
                         },
                       ),
                       const SizedBox(height: AppDimensions.paddingLg),

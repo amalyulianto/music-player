@@ -57,17 +57,7 @@ class _SplashScreenState extends State<SplashScreen>
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              AppColors.background,
-              AppColors.surface,
-              AppColors.background,
-            ],
-          ),
-        ),
+        color: AppColors.surface,
         child: FadeTransition(
           opacity: _fadeAnimation,
           child: ScaleTransition(
@@ -76,44 +66,42 @@ class _SplashScreenState extends State<SplashScreen>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(flex: 3),
-                // Glowing Glassmorphic Logo
                 Container(
-                  width: 120.0,
-                  height: 120.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        AppColors.surfaceLight.withValues(alpha: 0.8),
-                        AppColors.surface.withValues(alpha: 0.3),
-                      ],
-                    ),
-                    border: Border.all(
-                      color: AppColors.white.withValues(alpha: 0.15),
-                      width: 1.5,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.accent.withValues(alpha: 0.25),
-                        blurRadius: 30.0,
-                        spreadRadius: 2.0,
-                      ),
-                    ],
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.play_circle_filled,
-                      size: 64.0,
-                      color: AppColors.accent,
+                  // width: 120.0,
+                  // height: 120.0,
+                  // decoration: BoxDecoration(
+                  //   shape: BoxShape.circle,
+                  //   gradient: LinearGradient(
+                  //     begin: Alignment.topLeft,
+                  //     end: Alignment.bottomRight,
+                  //     colors: [
+                  //       AppColors.surfaceLight.withValues(alpha: 0.8),
+                  //       AppColors.surface.withValues(alpha: 0.3),
+                  //     ],
+                  //   ),
+                  //   border: Border.all(
+                  //     color: AppColors.white.withValues(alpha: 0.15),
+                  //     width: 1.5,
+                  //   ),
+                  //   boxShadow: [
+                  //     BoxShadow(
+                  //       color: AppColors.accent.withValues(alpha: 0.25),
+                  //       blurRadius: 30.0,
+                  //       spreadRadius: 2.0,
+                  //     ),
+                  // ],
+                  // ),
+                  child: Center(
+                    child: Image.asset(
+                      'assets/music_player_logo.png',
+                      width: 64,
                     ),
                   ),
                 ),
                 const SizedBox(height: AppDimensions.paddingXl),
-                // Premium Typography Title
+
                 Text(
-                  'AL-QURAN AUDIO',
+                  'Music Player',
                   style: AppTextStyles.songTitle.copyWith(
                     fontSize: 26.0,
                     fontWeight: FontWeight.w900,
@@ -129,16 +117,8 @@ class _SplashScreenState extends State<SplashScreen>
                   ),
                 ),
                 const SizedBox(height: AppDimensions.paddingSm),
+
                 // Premium Typography Subtitle
-                Text(
-                  'Harmonious Streaming',
-                  style: AppTextStyles.songArtist.copyWith(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w400,
-                    letterSpacing: 2.0,
-                    color: AppColors.secondaryText,
-                  ),
-                ),
                 const Spacer(flex: 2),
                 // Custom thin loader
                 const SizedBox(

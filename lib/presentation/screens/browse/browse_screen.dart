@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:music_player/presentation/blocs/player/player_state.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
 import '../../../core/constants/app_text_styles.dart';
@@ -167,9 +168,17 @@ class _BrowseScreenState extends State<BrowseScreen> {
                                     isFavorite: isFavorite,
                                     number: song.id,
                                     onPlayTap: () {
-                                      context.read<PlayerBloc>().add(
-                                        PlayerSongRequested(song.id),
-                                      );
+                                      final playerState = context
+                                          .read<PlayerBloc>()
+                                          .state;
+                                      final isCurrentlyPlaying =
+                                          playerState is PlayerActive &&
+                                          playerState.song.id == song.id;
+                                      if (!isCurrentlyPlaying) {
+                                        context.read<PlayerBloc>().add(
+                                          PlayerSongRequested(song.id),
+                                        );
+                                      }
                                       context.pushNamed('nowPlaying');
                                     },
                                     onFavoriteTap: () {
